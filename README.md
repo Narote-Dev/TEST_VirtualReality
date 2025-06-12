@@ -25,7 +25,6 @@
 | Composer       | ล่าสุด           |
 | Laravel        | 10.x             |
 | MySQL          | 5.7 / 8.x        |
-| Node.js & npm  | (ถ้าต้องใช้ front) |
 
 ---
 
