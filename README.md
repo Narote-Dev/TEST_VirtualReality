@@ -67,6 +67,8 @@ cmd
   php artisan serve
 
 
+
+
 🔐 การยืนยันตัวตน (Authentication)
 ระบบใช้ Laravel Sanctum สำหรับ Token-based Authentication
 
