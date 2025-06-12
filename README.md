@@ -124,9 +124,9 @@ Authorization: Bearer <token>
 |--------|-----------------------|------------------------|
 | GET    | /AllCurrency           | รายการสกุลเงินทั้งหมด  |
 | POST   | /AddCurrency             | เพิ่มสกุลเงินใหม่      |
-| PUT    | /UpdateCurrency/{id}  | แก้ไขสกุลเงินตาม ID    |
-| GET    | /CheckCurrency/{id}  | ตรวจสอบสกุลเงินที่ระบุ   |
-| DELETE    | /DelCurrency/{id}  | ลบสกุลเงิน   |
+| PUT    | /UpdateCurrency/{currency_id}  | แก้ไขสกุลเงินตาม ID    |
+| GET    | /CheckCurrency/{currency_id}  | ตรวจสอบสกุลเงินที่ระบุ   |
+| DELETE    | /DelCurrency/{currency_id}  | ลบสกุลเงิน   |
 
 ---
 
@@ -134,7 +134,7 @@ Authorization: Bearer <token>
 | Method | Endpoint              | คำอธิบาย               |
 |--------|-----------------------|------------------------|
 | GET    | /ShowTransaction           | รายการแลกเปลี่ยนทั้งหมด  |
-| GET   | /CheckTransaction/{id}             | ดูรายการแลกเปลี่ยนนั้น      |
+| GET   | /CheckTransaction/{Transaction_id}             | ดูรายการแลกเปลี่ยนนั้น      |
 | POST    | /AddTransaction  | เพิ่มรายการแลกปเลี่ยนเหรียญ    |
 
 
