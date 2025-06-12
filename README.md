@@ -124,18 +124,22 @@ Authorization: Bearer <token> //รูปแบบ
 4.ทดสอบ Endpoints เช่น /wallets, /transfer, /currency
 
 🧾 โครงสร้างโปรเจกต์
+
 app/
+
 ├── Models/
 │   ├── User.php
 │   ├── Wallet.php
 │   ├── Currency.php
 │   └── Transfer.php
+
 ├── Http/
 │   └── Controllers/
 │       ├── AuthController.php
 │       ├── WalletController.php
 │       ├── CurrencyController.php
 │       └── TransferController.php
+
 routes/
 └── api.php
 
