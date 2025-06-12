@@ -31,7 +31,7 @@
 
 ## 📦 ขั้นตอนติดตั้งโปรเจกต์
 
-1. **Clone Project**
+1.**Clone Project**
 cmd
   git clone https://github.com/your-username/crypto-exchange.git
 
