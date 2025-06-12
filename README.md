@@ -180,7 +180,3 @@ routes/
 - GitHub: [https://github.com/Narote-Dev](https://github.com/Narote-Dev)
 
 ---
-
-## 📄 License
-
-MIT License © 2025
