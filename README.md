@@ -147,7 +147,7 @@ Authorization: Bearer <token>
 1. สมัครผู้ใช้
 2. ล็อกอินเพื่อรับ Token
 3. เพิ่ม Header `Authorization: Bearer <token>` ในทุกคำขอ
-4. ทดสอบ Endpoints เช่น `/wallets`, `/transfer`, `/currency`
+4. ทดสอบ Endpoints เช่น `/ShowWallet`, `/ShowTransaction`, `/AllCurrency`
 
 ---
 
