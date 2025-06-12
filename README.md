@@ -41,7 +41,13 @@ cd crypto-exchange
 composer install
 ```
 
-3. **ตั้งค่าฐานข้อมูลใน `.env`**
+
+3.สร้างไฟล์ .env
+```
+  cp .env.example .env
+```
+
+4. **ตั้งค่าฐานข้อมูลใน `.env`**
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -51,22 +57,22 @@ DB_USERNAME=root
 DB_PASSWORD=your_password
 ```
 
-4. **สร้าง Application Key**  
+5. **สร้าง Application Key**  
 ```bash
 php artisan key:generate
 ```
 
-5. **รัน Migration เพื่อสร้างตาราง**  
+6. **รัน Migration เพื่อสร้างตาราง**  
 ```bash
 php artisan migrate
 ```
 
-6. **รัน Seed ข้อมูลเริ่มต้น**  
+7. **รัน Seed ข้อมูลเริ่มต้น**  
 ```bash
 php artisan db:seed
 ```
 
-7. **เริ่มต้นเซิร์ฟเวอร์ Laravel**  
+8. **เริ่มต้นเซิร์ฟเวอร์ Laravel**  
 ```bash
 php artisan serve
 ```
