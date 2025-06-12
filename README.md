@@ -32,7 +32,7 @@
 
 1. **Clone Project**  
 ```bash
-git clone git clone https://github.com/Narote-Dev/TEST_VirtualReality
+git clone https://github.com/Narote-Dev/TEST_VirtualReality
 ```
 
 2. **ติดตั้ง Dependency ด้วย Composer**  
