@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
+
 
 class AuthController extends Controller
 {
-    /**
-     * Register a new user
-     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -21,6 +19,7 @@ class AuthController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string|max:20|unique:users',
+            'username' => 'required|string|max:50',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -38,6 +37,7 @@ class AuthController extends Controller
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'kyc_status' => 'pending',
                 'is_verified' => false,
@@ -65,9 +65,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Login user
-     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -112,9 +109,6 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Get user profile
-     */
     public function profile(Request $request)
     {
         return response()->json([
@@ -126,15 +120,12 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Update user profile
-     */
     public function updateProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'first_name' => 'sometimes|required|string|max:255',
             'last_name' => 'sometimes|required|string|max:255',
-            'phone' => 'sometimes|required|string|max:20|unique:users,phone,' . $request->user()->id,
+            'phone' => 'sometimes|required|string|max:20|unique:users,phone,' . $request->user()->user_id . ',user_id'
         ]);
 
         if ($validator->fails()) {
@@ -164,93 +155,4 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Change password
-     */
-    public function changePassword(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'current_password' => 'required|string',
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation errors',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $user = $request->user();
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Current password is incorrect'
-            ], 400);
-        }
-
-        try {
-            $user->update([
-                'password' => Hash::make($request->new_password)
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Password changed successfully'
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Password change failed',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Logout user
-     */
-    public function logout(Request $request)
-    {
-        try {
-            $request->user()->currentAccessToken()->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Logged out successfully'
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Logout failed',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Logout from all devices
-     */
-    public function logoutAll(Request $request)
-    {
-        try {
-            $request->user()->tokens()->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Logged out from all devices successfully'
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Logout failed',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
 }

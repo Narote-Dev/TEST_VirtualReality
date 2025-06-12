@@ -29,10 +29,10 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'order_id' => 'nullable|integer',
-            'buyer_id' => 'required|exists:users,id',
-            'seller_id' => 'required|exists:users,id',
-            'currency_id' => 'required|exists:currencies,id',
+            //'order_id' => 'nullable|integer',
+            'buyer_id' => 'required|exists:users,user_id',
+            'seller_id' => 'required|exists:users,user_id',
+            'currency_id' => 'required|exists:currencies,currency_id',
             'amount' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
             'fee_amount' => 'nullable|numeric|min:0',

@@ -18,6 +18,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'phone',
+        'username',
         'password',
         'kyc_status',
         'is_verified',
@@ -38,7 +39,7 @@ class User extends Authenticatable
     // Relationships
     public function wallets()
     {
-        return $this->hasMany(Wallet::class);
+        return $this->hasMany(Wallet::class, 'user_id', 'user_id');
     }
 
     public function buyOrders()
@@ -77,4 +78,5 @@ class User extends Authenticatable
     {
         return $this->wallets()->where('currency_id', $currencyId)->exists();
     }
+
 }

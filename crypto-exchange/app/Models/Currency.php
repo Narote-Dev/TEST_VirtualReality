@@ -21,7 +21,7 @@ class Currency extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
+        'is_active' => 'integer',
         'decimal_places' => 'integer',
     ];
 

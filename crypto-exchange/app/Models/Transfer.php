@@ -27,15 +27,15 @@ class Transfer extends Model
         'fee_amount' => 'decimal:8',
     ];
 
-    // Relationships
+
     public function fromUser()
     {
-        return $this->belongsTo(User::class, 'from_user_id');
+        return $this->belongsTo(User::class, 'from_user_id', 'user_id');
     }
 
     public function toUser()
     {
-        return $this->belongsTo(User::class, 'to_user_id');
+        return $this->belongsTo(User::class, 'to_user_id', 'user_id');
     }
 
     public function currency()
@@ -43,7 +43,6 @@ class Transfer extends Model
         return $this->belongsTo(Currency::class);
     }
 
-    // Scopes
     public function scopeInternal($query)
     {
         return $query->where('type', 'internal');
@@ -72,7 +71,6 @@ class Transfer extends Model
         return $query->where('status', 'completed');
     }
 
-    // Helper methods
     public function getNetAmountAttribute()
     {
         return bcsub($this->amount, $this->fee_amount, 8);

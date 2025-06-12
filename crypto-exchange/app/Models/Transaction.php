@@ -9,8 +9,8 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected  $primaryKey = 'order_id';
     protected $fillable = [
-        'order_id',
         'buyer_id',
         'seller_id',
         'currency_id',
@@ -47,7 +47,7 @@ class Transaction extends Model
 
     public function currency()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(Currency::class,'currency_id');
     }
 
     // Scopes

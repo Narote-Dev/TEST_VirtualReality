@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,9 +10,6 @@ use App\Models\Currency;
 
 class WalletController extends Controller
 {
-    /**
-     * Get all user wallets
-     */
     public function index(Request $request)
     {
         try {
@@ -46,9 +43,7 @@ class WalletController extends Controller
         }
     }
 
-    /**
-     * Get specific wallet by currency
-     */
+  
     public function show(Request $request, $currencyId)
     {
         try {
@@ -89,13 +84,11 @@ class WalletController extends Controller
         }
     }
 
-    /**
-     * Create wallet for a currency
-     */
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'currency_id' => 'required|exists:currencies,id',
+            'currency_id' => 'required|exists:currencies,currency_id',
+            'code' => 'required|String|Max:10',
         ]);
 
         if ($validator->fails()) {
@@ -122,7 +115,7 @@ class WalletController extends Controller
             $currency = Currency::findOrFail($request->currency_id);
 
             $wallet = Wallet::create([
-                'user_id' => $request->user()->id,
+                'user_id' => $request->user()->user_id,
                 'currency_id' => $request->currency_id,
                 'balance' => 0,
                 'frozen_balance' => 0,
@@ -146,9 +139,6 @@ class WalletController extends Controller
         }
     }
 
-    /**
-     * Get wallet balance
-     */
     public function balance(Request $request, $currencyId)
     {
         try {
@@ -183,62 +173,7 @@ class WalletController extends Controller
         }
     }
 
-    /**
-     * Get wallet transaction history
-     */
-    public function history(Request $request, $currencyId)
-    {
-        try {
-            $wallet = $request->user()->wallets()
-                ->where('currency_id', $currencyId)
-                ->first();
-
-            if (!$wallet) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Wallet not found'
-                ], 404);
-            }
-
-            // Get transactions related to this wallet
-            $transactions = $request->user()->transactions()
-                ->with(['currency', 'buyer', 'seller', 'order'])
-                ->where('currency_id', $currencyId)
-                ->orderBy('created_at', 'desc')
-                ->paginate(20);
-
-            // Get transfers related to this wallet
-            $transfers = $request->user()->sentTransfers()
-                ->with(['currency', 'fromUser', 'toUser'])
-                ->where('currency_id', $currencyId)
-                ->union(
-                    $request->user()->receivedTransfers()
-                        ->with(['currency', 'fromUser', 'toUser'])
-                        ->where('currency_id', $currencyId)
-                )
-                ->orderBy('created_at', 'desc')
-                ->paginate(20);
-
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'transactions' => $transactions,
-                    'transfers' => $transfers,
-                ]
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to fetch wallet history',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Generate wallet address for crypto currencies
-     */
+    
     private function generateWalletAddress($currencyCode)
     {
         $prefixes = [
