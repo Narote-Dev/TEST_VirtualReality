@@ -163,6 +163,8 @@ app/
 ├── Http/
 │   └── Controllers/
 │       ├── AuthController.php
+│       ├── Transaction.php
+│       ├── TransferController.php
 │       ├── WalletController.php
 │       ├── CurrencyController.php
 │       └── TransferController.php
