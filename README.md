@@ -65,7 +65,7 @@ cmd
 8.เริ่มต้นเซิร์ฟเวอร์ Laravel
 cmd
   php artisan serve
-
+  
 
 
 
